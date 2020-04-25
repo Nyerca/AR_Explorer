@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:flutterapp4/about_widget.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
+
+import 'dart:async';
+
+import 'package:qrscan/qrscan.dart' as scanner;
 
 void main() => runApp(MyApp());
 
@@ -30,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ArCoreController arCoreController;
+  var urlCode = "";
   var clicked = 0;
 
   _onArCoreViewCreated(ArCoreController _arcoreController) {
@@ -45,14 +51,23 @@ class _MyHomePageState extends State<MyHomePage> {
    }
   };
 
-    _addObj(arCoreController);
+    //_addObj(arCoreController);
 
   }
 
-  _addObj(ArCoreController _arcoreController) {
+  Future _scan() async {
+    String barcode = await scanner.scan();
+    _addObj(this.arCoreController, barcode);
+  }
+
+
+
+  _addObj(ArCoreController _arcoreController, String urlCode) {
 
     final node = ArCoreReferenceNode(
-      obcject3DFileName: "lizard.sfb",
+      name: "Toucano",
+      objectUrl:
+      "https://raw.githubusercontent.com/Nyerca/ar_images/master/scene.gltf",
       scale: vector.Vector3(0.2, 0.2, 0.2),
       position: vector.Vector3(0, 0, -1),
     );
@@ -63,11 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+
   @override
   void dispose() {
     arCoreController.dispose();
     super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +93,24 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ArCoreView(
-        onArCoreViewCreated: _onArCoreViewCreated,
-        enableTapRecognizer: true,
+
+      body: Stack(
+        children: <Widget>[
+          ArCoreView(
+            onArCoreViewCreated: _onArCoreViewCreated,
+            enableTapRecognizer: true,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: RaisedButton(
+              onPressed: _scan,
+              child: Text('Go back!'),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+
