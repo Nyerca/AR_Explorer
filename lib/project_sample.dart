@@ -5,7 +5,7 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:flutterapp4/about_widget.dart';
 
 import 'dart:async';
-import 'package:flutterapp4/qr/ex2.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -85,18 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onArCoreViewCreated: _onArCoreViewCreated,
             enableTapRecognizer: true,
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: RaisedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => QRViewExample()),
-                );
-              },
-              child: Text('Go back!'),
-            ),
-          ),
+
         ],
       ),
     );

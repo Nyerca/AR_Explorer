@@ -22,7 +22,7 @@ class AboutWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              "Mage lizard that casts spells as fast as it eats animals" + "\n",
+              "Mage bat that casts spells as fast as it eats animals" + "\n",
               textAlign: TextAlign.center,
             ),
           ],
