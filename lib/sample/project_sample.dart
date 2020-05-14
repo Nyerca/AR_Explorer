@@ -5,12 +5,18 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:flutterapp4/about_widget.dart';
 
 import 'dart:async';
-import 'package:flutterapp4/qr/ex2.dart';
+import './ex2.dart';
 
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  String elementUrl="";
+
+  MyApp([String url]) {
+    elementUrl = url;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,14 +24,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter AR'),
+      home: MyHomePage('Flutter AR', elementUrl),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage(this.title, this.url) {}
+  String title;
+  String url;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -33,8 +40,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ArCoreController arCoreController;
-  TextEditingController _outputController = new TextEditingController();
-  var urlCode = "";
   var clicked = 0;
 
   _onArCoreViewCreated(ArCoreController _arcoreController) {
@@ -49,7 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
      ),
    }
   };
-    _addObj(arCoreController);
+    if(widget.url!=null) {
+      _addObj(arCoreController);
+    }
+
 
   }
 
@@ -58,9 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
       name: "Toucano",
       objectUrl:
       "https://raw.githubusercontent.com/Nyerca/ar_images/master/scene.gltf",
-      scale: vector.Vector3(0.2, 0.2, 0.2),
+      scale: vector.Vector3(0.1, 0.1, 0.1),
       position: vector.Vector3(0, 0, -1),
+      rotation:  vector.Vector4(90, 0, 0, 0),
     );
+
     _arcoreController.addArCoreNode(node);
   }
 
@@ -94,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => QRViewExample()),
                 );
               },
-              child: Text('Go back!'),
+              child: Text('Scan'),
             ),
           ),
         ],

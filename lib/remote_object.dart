@@ -4,6 +4,10 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 
 void main() => runApp(MyApp());
 
+
+/* After hitting an appeared point on a surface (you have to wait some seconds for them to appear)
+a remote object get charged.
+ */
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
